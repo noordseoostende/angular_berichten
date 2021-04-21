@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-post-create',
-  templateUrl: './post-create.component.html'
+  templateUrl: './post-create.component.html',
+  styleUrls: ['./post-create.component.css']
 })
 export class PostCreateComponent {
+  enteredValue = '';
   newPost = 'Geen inhoud';
-  onAddPost() {
-    this.newPost = 'het bericht van gebruiker\'s';
+  onAddPost(postInput: HTMLTextAreaElement) {
+    this.newPost = this.enteredValue;
   }
 }
