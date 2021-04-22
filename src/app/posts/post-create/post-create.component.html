@@ -1,7 +1,28 @@
 <mat-card>
+  <form (submit)="onAddPost(postForm)" #postForm="ngForm">
 
-  <mat-form-field appearance="fill">
-    <textarea matInput rows="6" [(ngModel)]="enteredValue"></textarea>
-  </mat-form-field>
-  <button mat-raised-button color="accent" (click)="onAddPost()">Bericht opslaan</button>
+    <mat-form-field>
+      <input
+        matInput type="text"
+        name="title"
+        ngModel
+        required
+        minlength="3"
+        #title="ngModel"
+        >
+      <mat-error *ngIf="title.invalid">Aub voer een bericht in</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <textarea
+        matInput
+        rows="4"
+        name="content"
+        ngModel
+        required
+        #content="ngModel"
+        ></textarea>
+      <mat-error *ngIf="content.invalid">Aub voer een bericht in</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="accent" type="submit">Bericht opslaan</button>
+  </form>
 </mat-card>
