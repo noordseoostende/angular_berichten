@@ -17,8 +17,8 @@ export class PostCreateComponent implements OnInit {
   enteredContent = "";
   post!: Post; // een opmerking
   isLoading = false;
-  form: FormGroup;
-  imagePreview: string;
+  form!: FormGroup;
+  imagePreview!: string;
   private mode = "create";
   private postId!: string;
 
@@ -41,14 +41,16 @@ export class PostCreateComponent implements OnInit {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("postId")) {
         this.mode = "edit";
-        this.postId = paramMap.get("postId");
+        paramMap.get("postId");
+        // this.postId = paramMap.get("postId");
         this.isLoading = true;
         this.postsService.getPost(this.postId).subscribe(postData => {
           this.isLoading = false;
           this.post = {
             id: postData._id,
             title: postData.title,
-            content: postData.content
+            content: postData.content,
+            imagePath: "null"
           };
           this.form.setValue({
             'title': this.post.title,
@@ -82,7 +84,11 @@ export class PostCreateComponent implements OnInit {
     }
     this.isLoading = true;
     if (this.mode === "create") {
-      this.postsService.addPost(this.form.value.title, this.form.value.content);
+      this.postsService.addPost(
+        this.form.value.title,
+        this.form.value.content,
+        this.form.value.image
+        );
     } else {
       this.postsService.updatePost(
         this.postId,
